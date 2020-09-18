@@ -2,11 +2,96 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div class="" id="card-list">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+                #leftbox {
+                    float:left;
+                    width: 33.3%;
+                    height:500px;
+                    overflow: auto;
+                    padding:1em
+                }
+                #middlebox{
+                    float:left;
+                    width:33.33%;
+                    overflow: auto;
+                    height:500px;
+                    padding:1em
+                    /* height:500px; */
+                }
+                #rightbox{
+                   float:right;
+                   width:33.3%;
+                   overflow: auto;
+                   height:500px;
+                   padding:1em
+                    /* height:500px; */
+                }
+                h1{
+                    color:green;
+                    text-align:center;
+                }
+                h2{
+                    color:white;
+                    text-align:center;
+                }
+                h3{
+                    color:white;
+                    text-align:center;
+                }
+                p{
+                    color:black;
+                    text-align:center;
+                }
+            </style>
+    <title></title>
+</head>
+<body>
+  <div class="nav">
+    <h1>Welcome to the Tarot Spread Explorer</h1>
+    <p>Use this application to choose a spread type and generate three Tarot cards to fill that spread.</p>
+    <p>First choose the type of spread you would like to draw below. You should clearly envision a question in your mind for which the spread can help you find the answer.</p>
+    <p>Then explore the relationships between your query, the cards' meanings, and their spots in the spread.</p>
+    <p>Which problem's persistently plague people? You can view details from pervious queries below. All queries are anonymous.</p>
+    <p style="color:purple">*Remember*</p>
+    <p>Cards have different meanings depending on whether or not they are upright or in reverse.</p>
+  </div>
+        <div class="carousel" style="height:500px">
+          <div class='carousel-item' id= "leftbox">
+          <h2 id ='card 1'>?</h2>
+          </div>
+
+          <div class='carousel-item' id = "middlebox">
+            <h2 id='card 2'>?</h2>
+          </div>
+
+          <div class='carousel-item' id = "rightbox">
+            <h2 id="card 3">?</h2>
+          </div>
+        </div>
+
+        <ul class="collapsible">
+          <li>
+            <div class="collapsible-header" id='c-header'>This is the header</div>
+            <div class="collapsible-body"><span id='c-body'>This is some content inside the dropdown</span></div>
+          </li>
+        </ul>
+
+
+    <form class="container" action="index.html" method="post">
+      <input type="text" name="" value="" placeholder="What is your question or situation? What's troubling you?" style="display: block; width: 500px;">
+      <select class="spread-type" name="spread-type" id="spread-type" style="display: block; width: 300px;">
+        <option value="" placeholder="Select spread type"></option>
+      </select ><br>
+      <button type="submit" name="submit">Create Spread</button>
+    </form>
+
+    <div class="card-panel teal lighten-2">
+      <h2 class="text-blue">List of Spreads</h2>
     </div>
 
   <script src="./src/index.js"></script>
