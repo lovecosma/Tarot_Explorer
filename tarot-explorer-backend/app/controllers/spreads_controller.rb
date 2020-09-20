@@ -1,4 +1,5 @@
 class SpreadsController < ApplicationController
+  
   before_action :set_spread, only: [:show, :update, :destroy]
 
   # GET /spreads
