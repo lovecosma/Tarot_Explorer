@@ -40,13 +40,14 @@ class Spread {
     console.log(json)
     Spread.getSpread()
   })
+  .catch(error => alert(error))
 
   }
 
     static getSpread(){
     fetch(SPREAD_BASE_URL)
     .then(resp => resp.json())
-    .then(json => Spread.renderSpreadLastSpread(json))
+    .then(json => Spread.renderSpread(json))
   }
 
   static getSpreads(){
@@ -54,11 +55,13 @@ class Spread {
   fetch(SPREAD_BASE_URL)
   .then(resp => resp.json())
   .then(json => Spread.renderSpreads(json))
+  .catch(error => alert(error))
 }
 
    static renderSpreads(spreads){
      if (spreads.length > 0) {
        spreads.forEach((spread, i) => {
+        if(spread.signature == null){ spread.signature == "Mega Mysterious Seeker" }
         let new_spread = new Spread(spread.id, spread.query, spread.spread_type, spread.cards, spread.signature)
         Spread.all.push(new_spread)
        });
@@ -91,6 +94,7 @@ class Spread {
     console.log(json)
     Spread.displaySpreads()
   })
+  .catch(error => alert(error))
   }
 
 
@@ -150,7 +154,7 @@ class Spread {
     set_collapsible()
   }
 
-  static renderSpreadLastSpread(spreads){
+  static renderSpread(spreads){
     let last_spread = spreads[spreads.length-1]
     let spread_type_array = last_spread.spread_type.split(" / ")
     card_one_header().innerText = spread_type_array[0]
