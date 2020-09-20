@@ -10,24 +10,27 @@
     <style>
                 #leftbox {
                     float:left;
+                    background:red;
                     width: 33.3%;
-                    height:500px;
+                    height:700px;
                     overflow: auto;
                     padding:1em
                 }
                 #middlebox{
                     float:left;
+                    background:green;
                     width:33.33%;
                     overflow: auto;
-                    height:500px;
+                    height:700px;
                     padding:1em
                     /* height:500px; */
                 }
                 #rightbox{
                    float:right;
+                   background:blue;
                    width:33.3%;
                    overflow: auto;
-                   height:500px;
+                   height:700px;
                    padding:1em
                     /* height:500px; */
                 }
@@ -47,11 +50,19 @@
                     color:black;
                     text-align:center;
                 }
+                .horizontal-center {
+                  display: flex;
+                  justify-content: center;
+                  }
+                  li {
+                  display: inline-block;
+                  width:33%
+                  }
             </style>
     <title></title>
 </head>
 <body>
-  <div class="nav">
+  <div class="nav" id="nav">
     <h1>Welcome to the Tarot Spread Explorer</h1>
     <p>Use this application to choose a spread type and generate three Tarot cards to fill that spread.</p>
     <p>First choose the type of spread you would like to draw below. You should clearly envision a question in your mind for which the spread can help you find the answer.</p>
@@ -60,7 +71,8 @@
     <p style="color:purple">*Remember*</p>
     <p>Cards have different meanings depending on whether or not they are upright or in reverse.</p>
   </div>
-        <div class="carousel" style="height:500px">
+  <br><br>
+        <div class="carousel" style="height:700px">
           <div class='carousel-item' id= "leftbox">
           <h2 id ='card 1'>?</h2>
           </div>
@@ -73,28 +85,52 @@
             <h2 id="card 3">?</h2>
           </div>
         </div>
+  <br><br>
+  <div id='done_div'>
 
-        <ul class="collapsible">
-          <li>
-            <div class="collapsible-header" id='c-header'>This is the header</div>
-            <div class="collapsible-body"><span id='c-body'>This is some content inside the dropdown</span></div>
-          </li>
-        </ul>
-
-
-    <form class="container" action="index.html" method="post">
-      <input type="text" name="" value="" placeholder="What is your question or situation? What's troubling you?" style="display: block; width: 500px;">
-      <select class="spread-type" name="spread-type" id="spread-type" style="display: block; width: 300px;">
-        <option value="" placeholder="Select spread type"></option>
+  </div>
+  <br>
+    <form class="container" action="index.html" method="post" id='spread-form'>
+      <input type="text" id="query-input" placeholder="What is your question or situation? What's troubling you?" style="display: block; width: 500px;">
+      <select class="spread-type" name="spread-type" id="spread-type-input" style="display: block; width: 700px;" placeholder="Select a spread type">
+        <option value="Past / Present / Future" placeholder="Past / Present / Future">Past / Present / Future</option>
+        <option value="The nature of your problem / The cause / The solution" placeholder="The nature of your problem / The cause / The solution">The nature of your problem / The cause / The solution </option>
+        <option value="Current situation / Obstacle / Advice">Current situation / Obstacle / Advice  </option>
+        <option value="Situation / Action / Outcome">Situation / Action / Outcome </option>
+        <option value="Context of the situation / Where you need to focus / Outcome">Context of the situation / Where you need to focus / Outcome</option>
+        <option value="What I think about the situation / What I feel / What I do">What I think about the situation / What I feel / What I do</option>
+        <option value="Where you stand now / What you aspire to / How to get there">Where you stand now / What you aspire to / How to get there  </option>
+        <option value="What you aspire to / What is standing in your way / How you can overcome this">What you aspire to / What is standing in your way / How you can overcome this</option>
+        <option value="What will help you / What will hinder you / What is your unrealised potential">What will help you / What will hinder you / What is your unrealised potential</option>
+        <option value="What you can change / What you can’t change / What you may not be aware of">What you can change / What you can’t change / What you may not be aware of</option>
+        <option value="What worked well / What didn’t work well / Key learnings">What worked well / What didn’t work well / Key learnings</option>
+        <option value="You / The other person / The relationship">You / The other person / The relationship </option>
+        <option value="What you want from the relationship / What they want from the relationship / Where the relationship is heading">What you want from the relationship / What they want from the relationship / Where the relationship is heading </option>
+        <option value="What brings you together / What pulls you apart / What needs your attention">What brings you together / What pulls you apart / What needs your attention</option>
+        <option value="Strengths / Weaknesses / Advice">Strengths / Weaknesses / Advice</option>
+        <option value="Opportunities / Challenges / Outcome">Opportunities / Challenges / Outcome</option>
+        <option value="Option 1 / Option 2 / Option 3">Option 1 / Option 2 / Option 3</option>
+        <option value="Option 1 / Option 2 / What you need to know to make a decision">Option 1 / Option 2 / What you need to know to make a decision</option>
+        <option value="The solution / An alternative solution / How to choose">The solution / An alterWhat the Universe wants you to be / The personal qualities required / Specific action requirednative solution / How to choose</option>
+        <option value="Mind / Body / Spirit">Mind / Body / Spirit</option>
+        <option value="Your conscious mind / Your sub-conscious mind / Your super-conscious mind">Your conscious mind / Your sub-conscious mind / Your super-conscious mind</option>
+        <option value="Material state / Emotional state / Spiritual state">Material state / Emotional state / Spiritual state</option>
+        <option value="You / Your current path / Your potential">You / Your current path / Your potential</option>
+        <option value="Stop / Start / Continue">Stop / Start / Continue</option>
+        <option value="What the Universe wants you to be / The personal qualities required / Specific action required"></option>
       </select ><br>
       <button type="submit" name="submit">Create Spread</button>
     </form>
 
-    <div class="card-panel teal lighten-2">
-      <h2 class="text-blue">List of Spreads</h2>
+    <div class="box">
+      <h2 class="black-text">List of Spreads</h2>
     </div>
+      <div class="" id='spreads-div'>
+
+      </div>
 
   <script src="./src/index.js"></script>
   <script src="./models/card.js"></script>
+  <script src="./models/spread.js"></script>
   </body>
 </html>
