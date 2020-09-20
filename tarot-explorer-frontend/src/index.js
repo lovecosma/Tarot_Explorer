@@ -11,9 +11,9 @@ function removeElement(elementId) {
 document.addEventListener("DOMContentLoaded", onLoad)
 
 const cardList = () => document.getElementById('card-list')
-const card_1 = () => document.getElementById('leftbox')
-const card_2 = () => document.getElementById('middlebox')
-const card_3 = () => document.getElementById('rightbox')
+const card_1 = () => document.getElementById('card-slot-1')
+const card_2 = () => document.getElementById('card-slot-2')
+const card_3 = () => document.getElementById('card-slot-3')
 const spread_form = () => document.getElementById('spread-form')
 const query_input = () => document.getElementById('query-input')
 const spread_type_input = () => document.getElementById('spread-type-input')
@@ -37,6 +37,16 @@ const spread_title = () => document.getElementById('spread-title')
 const spread_signature_slot = () => document.getElementById('spread-signature-slot')
 
 
+function resetInputs(){
+  query_input().value = ""
+  spread_type_input().value = ""
+  card_1().innerHTML = ''
+  card_2().innerHTML = ''
+  card_3().innerHTML = ''
+  card_one_header().innerText = "?"
+  card_two_header().innerText = "?"
+  card_three_header().innerText = "?"
+}
 
 const set_carousel = () => {
   let elems = document.querySelectorAll('.carousel');
@@ -51,6 +61,7 @@ function onLoad(){
 set_carousel()
 set_collapsible()
 Card.getCards()
+Spread.getSpreads()
 spread_form().addEventListener('submit', getFormData)
 
 function getFormData (e){
@@ -67,26 +78,4 @@ function getFormData (e){
   Spread.sendSpreadInfo(query, spread_type, cards)
 }
 
-function getSpreads(){
-  fetch(SPREAD_BASE_URL)
-  .then(resp => resp.json())
-  .then(json => {
-    Spread.renderSpreadLastSpread(json)
-  })
-}
-
-function resetInput(){
-
-}
-
-
-function addSignature(){
-  let signature =  prompt("Would you like to add a signature to this spread? Everyone can view it in the list below.", "Some Mysterious Seeker...")
-  if (signature == null){
-    signature = "Some Super Mysterious Seeker..."
-  }
-  const spread = new Spread(this.id, this.query, this.spread_type, this.cards, signature)
-  spread.sendSignatureInfo()
-  Spread.all.push(spread)
-  removeElement('done')
 }

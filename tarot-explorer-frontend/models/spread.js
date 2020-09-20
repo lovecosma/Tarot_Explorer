@@ -38,10 +38,35 @@ class Spread {
   .then(resp => resp.json())
   .then(json => {
     console.log(json)
-    getSpreads()
+    Spread.getSpread()
   })
 
   }
+
+    static getSpread(){
+    fetch(SPREAD_BASE_URL)
+    .then(resp => resp.json())
+    .then(json => Spread.renderSpreadLastSpread(json))
+  }
+
+  static getSpreads(){
+    Spread.all.length = 0
+  fetch(SPREAD_BASE_URL)
+  .then(resp => resp.json())
+  .then(json => Spread.renderSpreads(json))
+}
+
+   static renderSpreads(spreads){
+     if (spreads.length > 0) {
+       spreads.forEach((spread, i) => {
+        let new_spread = new Spread(spread.id, spread.query, spread.spread_type, spread.cards, spread.signature)
+        Spread.all.push(new_spread)
+       });
+     }
+     Spread.displaySpreads()
+   }
+
+
 
    sendSignatureInfo(){
 
@@ -143,7 +168,19 @@ class Spread {
     done.className = "waves-effect blue waves-light btn"
     done.innerText = "Done with this spread?"
     done.id = 'done'
-    done.addEventListener('click', addSignature.bind(last_spread))
+    done.addEventListener('click', Spread.addSignature.bind(last_spread))
+  }
+
+  static addSignature(){
+    let signature =  prompt("Would you like to add a signature to this spread? Everyone can view it in the list below.", "Some Mysterious Seeker...")
+    if (signature == null){
+      signature = "Some Super Mysterious Seeker..."
+    }
+    const spread = new Spread(this.id, this.query, this.spread_type, this.cards, signature)
+    spread.sendSignatureInfo()
+    Spread.all.push(spread)
+    removeElement('done')
+    resetInputs()
   }
 
 }

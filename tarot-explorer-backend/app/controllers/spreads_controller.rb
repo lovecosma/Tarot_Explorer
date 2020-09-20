@@ -10,13 +10,12 @@ class SpreadsController < ApplicationController
 
   # GET /spreads/1
   def show
-    render json: @spread
+    render json: @spread, include: [:cards]
   end
 
   # POST /spreads
   def create
     @spread = Spread.new(spread_params)
-
     if @spread.save
       render json: @spread, status: :created, location: @spread
     else
