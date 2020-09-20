@@ -8,6 +8,12 @@ function removeElement(elementId) {
     element.parentNode.removeChild(element);
 }
 
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", onLoad)
 
 const cardList = () => document.getElementById('card-list')
@@ -22,8 +28,9 @@ const card_two_header = () => document.getElementById('card 2')
 const card_three_header = () => document.getElementById('card 3')
 const nav = () => document.getElementById('nav')
 const done_div = () => document.getElementById('done_div')
-const spreads_div = () => document.getElementById('spreads-div')
-
+const spreads_div = () => document.getElementById('spread-list')
+const spreads_list = () => document.getElementById('spreads-div')
+const submit_button = () => document.getElementById('submit')
 const get_first_slot_header = () => document.getElementById('first-slot-header')
 const get_first_slot_body = () => document.getElementById('first-slot-body')
 
@@ -46,6 +53,7 @@ function resetInputs(){
   card_one_header().innerText = "?"
   card_two_header().innerText = "?"
   card_three_header().innerText = "?"
+  submit_button().disabled = false
 }
 
 const set_carousel = () => {
@@ -65,6 +73,7 @@ Spread.getSpreads()
 spread_form().addEventListener('submit', getFormData)
 
 function getFormData (e){
+  submit_button().disabled = true
   e.preventDefault()
   const first = Card.random()
   const second = Card.random()

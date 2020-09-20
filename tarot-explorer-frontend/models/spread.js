@@ -48,10 +48,10 @@ class Spread {
     fetch(SPREAD_BASE_URL)
     .then(resp => resp.json())
     .then(json => Spread.renderSpread(json))
+    .catch(error => alert(error))
   }
 
   static getSpreads(){
-    Spread.all.length = 0
   fetch(SPREAD_BASE_URL)
   .then(resp => resp.json())
   .then(json => Spread.renderSpreads(json))
@@ -100,6 +100,7 @@ class Spread {
 
 
   static displaySpreads(){
+    removeAllChildNodes(spreads_list())
     Spread.all.forEach((spread, i) => {
       const spread_div = document.createElement('div')
       const spread_header_div = document.createElement('div')
@@ -108,7 +109,7 @@ class Spread {
       const ul = document.createElement('ul')
       let background_color = ''
 
-      spreads_div().appendChild(spread_div)
+      spreads_list().appendChild(spread_div)
       spread_div.id = `spread-${spread.id}`
       spread_div.appendChild(spread_header_div)
 
