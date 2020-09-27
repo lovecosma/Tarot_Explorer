@@ -17,6 +17,8 @@ class Card {
     this.image_url = url
   }
 
+  // Make card display in the 'spot' or div that's passed in.
+
    display(spot){
    const card = document.createElement('div')
    const img = document.createElement('img')
@@ -39,14 +41,19 @@ class Card {
    card.className = 'teal lighten-2'
    card_name.innerText = this.value_int + " " + this.name
    long_desc.innerText = this.desc
+
+    // Change output for reversed card
+
    if(this.upright) {
      card_pos.innerText = "upright";
      short_desc.innerText = "Meaning: " + this.meaning_up
    }else {
      card_pos.innerText = "reversed";
      short_desc.innerText = "Meaning: " + this.meaning_rev
-     img.transform = 'rotateY(180)'
    }
+
+   // Append elements to DOM
+
    spot().appendChild(card_name)
    spot().appendChild(card_pos)
    spot().appendChild(img_div)
@@ -54,7 +61,11 @@ class Card {
    spot().appendChild(short_desc)
    spot().appendChild(long_desc_div)
    long_desc_div.appendChild(long_desc)
+   
+
    }
+
+   //Get all cards from backend
 
    static getCards(){
      fetch(BASE_URL)
@@ -64,6 +75,8 @@ class Card {
      })
    }
 
+
+  //Create cards in frontend
 
  static createCards(cardsData){
    cardsData.forEach((data, i) => {
@@ -78,14 +91,13 @@ class Card {
       Card.all.push(card)
   }
 
- static displayCards(cardData){
-   cardList().innerHTML = ''
-   Card.all.forEach((card, i) => { card.display() });
-  }
+  //Get random card from deck
 
   static random(){
     return Card.all[Math.floor(Math.random() * Card.all.length)]
   }
+
+  //Class method for displaying card
 
   static display(card_object, spot){
     const card = document.createElement('div')

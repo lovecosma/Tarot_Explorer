@@ -73,8 +73,14 @@ Spread.getSpreads()
 spread_form().addEventListener('submit', getFormData)
 
 function getFormData (e){
+
+  // Disable submit button to prevent multiple submission events
+
   submit_button().disabled = true
   e.preventDefault()
+
+  // Get spread info ready for send
+
   const first = Card.random()
   const second = Card.random()
   const third = Card.random()
@@ -84,6 +90,9 @@ function getFormData (e){
   cards.push(first.id)
   cards.push(second.id)
   cards.push(third.id)
+
+  // Send spread info to backend
+
   Spread.sendSpreadInfo(query, spread_type, cards)
 }
 

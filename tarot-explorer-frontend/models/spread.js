@@ -10,12 +10,8 @@ class Spread {
     this.signature = signature
   }
 
-  // static createSpreads(spreadsData){
-  //   spreadData.forEach((data, i) => {
-  //   data.pread.display()
-  //   });
-  // }
 //Creating spread to persist in DB in backend
+
   static sendSpreadInfo(query, spread_type, cards){
     let formData = {
     spread: {
@@ -44,6 +40,8 @@ class Spread {
 
   }
 
+  //Get and render the previously made spread from list of all spreads
+
     static getSpread(){
     fetch(SPREAD_BASE_URL)
     .then(resp => resp.json())
@@ -51,12 +49,35 @@ class Spread {
     .catch(error => alert(error))
   }
 
+  static renderSpread(spreads){
+    let last_spread = spreads[spreads.length-1]
+    let spread_type_array = last_spread.spread_type.split(" / ")
+    card_one_header().innerText = spread_type_array[0]
+    card_two_header().innerText = spread_type_array[1]
+    card_three_header().innerText = spread_type_array[2]
+    let first_card = Card.all.find(card => card.id == last_spread.cards[0].id)
+    let second_card = Card.all.find(card => card.id == last_spread.cards[1].id)
+    let third_card = Card.all.find(card => card.id == last_spread.cards[2].id)
+    first_card.display(card_1)
+    second_card.display(card_2)
+    third_card.display(card_3)
+    let done = document.createElement('button')
+    done_div().className = 'horizontal-center'
+    done_div().appendChild(done)
+    done.className = "waves-effect blue waves-light btn"
+    done.innerText = "Done with this spread?"
+    done.id = 'done'
+    done.addEventListener('click', Spread.addSignature.bind(last_spread))
+  }
+
+  //Get and render all previously made spreads
+
   static getSpreads(){
-  fetch(SPREAD_BASE_URL)
-  .then(resp => resp.json())
-  .then(json => Spread.renderSpreads(json))
-  .catch(error => alert(error))
-}
+    fetch(SPREAD_BASE_URL)
+    .then(resp => resp.json())
+    .then(json => Spread.renderSpreads(json))
+    .catch(error => alert(error))
+  }
 
    static renderSpreads(spreads){
      if (spreads.length > 0) {
@@ -69,7 +90,7 @@ class Spread {
      Spread.displaySpreads()
    }
 
-
+   // Send PATCH request to add optional signature
 
    sendSignatureInfo(){
 
@@ -97,7 +118,19 @@ class Spread {
   .catch(error => alert(error))
   }
 
+  static addSignature(){
+    let signature =  prompt("Would you like to add a signature to this spread? Everyone can view it in the list below.", "Some Mysterious Seeker...")
+    if (signature == null){
+      signature = "Some Super Mysterious Seeker..."
+    }
+    const spread = new Spread(this.id, this.query, this.spread_type, this.cards, signature)
+    spread.sendSignatureInfo()
+    Spread.all.push(spread)
+    removeElement('done')
+    resetInputs()
+  }
 
+  //Display all spreads in list of spreads
 
   static displaySpreads(){
     removeAllChildNodes(spreads_list())
@@ -119,6 +152,7 @@ class Spread {
       spread_title.className = "black-text"
       spread_header_div.appendChild(spread_signature_slot)
       spread_signature_slot.className = 'center-align'
+      if(spread.signature == null){spread.signature = "Some Confused Seeker"}
       spread_signature_slot.innerText = `pulled by ${spread.signature}`
       spread_div.appendChild(ul)
       ul.className = 'collapsible'
@@ -153,39 +187,6 @@ class Spread {
       });
     });
     set_collapsible()
-  }
-
-  static renderSpread(spreads){
-    let last_spread = spreads[spreads.length-1]
-    let spread_type_array = last_spread.spread_type.split(" / ")
-    card_one_header().innerText = spread_type_array[0]
-    card_two_header().innerText = spread_type_array[1]
-    card_three_header().innerText = spread_type_array[2]
-    let first_card = Card.all.find(card => card.id == last_spread.cards[0].id)
-    let second_card = Card.all.find(card => card.id == last_spread.cards[1].id)
-    let third_card = Card.all.find(card => card.id == last_spread.cards[2].id)
-    first_card.display(card_1)
-    second_card.display(card_2)
-    third_card.display(card_3)
-    let done = document.createElement('button')
-    done_div().className = 'horizontal-center'
-    done_div().appendChild(done)
-    done.className = "waves-effect blue waves-light btn"
-    done.innerText = "Done with this spread?"
-    done.id = 'done'
-    done.addEventListener('click', Spread.addSignature.bind(last_spread))
-  }
-
-  static addSignature(){
-    let signature =  prompt("Would you like to add a signature to this spread? Everyone can view it in the list below.", "Some Mysterious Seeker...")
-    if (signature == null){
-      signature = "Some Super Mysterious Seeker..."
-    }
-    const spread = new Spread(this.id, this.query, this.spread_type, this.cards, signature)
-    spread.sendSignatureInfo()
-    Spread.all.push(spread)
-    removeElement('done')
-    resetInputs()
   }
 
 }
